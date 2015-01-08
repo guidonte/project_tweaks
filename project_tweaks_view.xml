@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data noupdate="0">
+
+        <record id="view_project_project_filter" model="ir.ui.view">
+            <field name="name">project.project.select.inherited</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project_project_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@string='Member']" position="replace">
+                    <!-- Add "String" name attribute -->
+                    <filter icon="terp-personal+"
+                            string="Member"
+                            name="Member"
+                            domain="['|',('user_id', '=', uid),('members', '=', uid)]"
+                            help="Projects in which I am a member."/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="project_invoice_form" model="ir.ui.view">
+            <field name="name">project.project.form.inherited</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <xpath expr='//div[@name="options_active"]' position='inside'>
+                    <field name="use_timesheets" class="oe_inline"/>
+                    <label for="use_timesheets"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="project.open_view_project_all" model="ir.actions.act_window">
+            <field name="context">{'search_default_Current': 1, 'search_default_Member': 1}</field>
+        </record>
+
+    </data>
+
+</openerp>
+
